@@ -1,5 +1,5 @@
 # theme: jekyll-theme-hacker
-theme: minima
+theme: hacker
 title: Snowboarding Coder
 descriptions: Musing from an old hacker
 markdown: kramdown
@@ -27,6 +27,7 @@ plugins:
 #   - .sass-cache/
 #   - .jekyll-cache/
 #   - gemfiles/
+#   - code/
 #   - Gemfile
 #   - Gemfile.lock
 #   - node_modules/
