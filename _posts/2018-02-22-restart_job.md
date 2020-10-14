@@ -1,0 +1,12 @@
+After my last employer shut down our site and sent us all packing, I took some time to consider what I wanted from a new job and what things were important. Much to my surprise, after some good timing and a lot of long discussions, I ended up back at a company I had worked for and left not too long ago.  Suffice it to say that there were some new opportunities and enough things had changed (particularly senior management) that I thought this would be a good position for me.  The reasons I came back are not what I want to discuss here, however.
+
+Coming back to a position is an interesting experience.  I basically know how the tools and systems should work (heck, I wrote many of them), but I haven't used them in long enough that many of the details have gone.  I've found myself struggling to find information about basic setups and tools that I know are needed to do the job - this is writing code for an embedded systems, so the debug environment can get a little complex.  This is a really good learning experience for me.  When I curse the idiot that didn't write up a "getting started" document for setting these tools up, I quickly remember that *I* am that idiot.  
+
+I remember reading, a few years ago, a blog post about gender inequity in the tech world which made the point that not having good documentation is a larger hurdle for women/minorities/anyone who doesn't fit into the dominant culture of the lab.  Requiring new engineers to "ask around", "know who to ask", or other similar requirements can be difficult, especially if you're different from most of the rest of the group.  Add a good dose of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) to the new employee and it gets harder and harder to get established.  
+
+I keep reminding myself that if I'm frustrated, if I'm intimidated, if I'm concerned that I'm not getting started quickly enough or getting enough done, and I'm a senior engineer who's already done this job once, then coming in as a new hire into a group you don't know is really going to be draining.
+
+So, if you're safely ensconced in a development job take a few minutes and start documenting how to get started, how to do various tasks that only you know.  If you're starting something new, take good notes and try to figure out how you can share them with the team and with other newcomers.
+
+My first code review was today.  It was for a 'getting started' guide.  
+
