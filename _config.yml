@@ -1,7 +1,7 @@
 theme: jekyll-theme-hacker
 # theme: minima
 title: Snowboarding Coder
-descriptions: Musing from an old hacker
+description: Musing from an old hacker
 markdown: kramdown
 permalink: /newblog/:year/:month/:day/:title
 
