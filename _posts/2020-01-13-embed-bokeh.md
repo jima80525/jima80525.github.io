@@ -1,3 +1,5 @@
+# Embedding Bokeh
+
 I've recently been using [bokeh](https://bokeh.org/) to produce some charts for my team on a regular basis and I found it a remarkable tool for the job. I particularly appreciate that it will serve web pages from my machine so that I can share the graphs without needing to install anything on my manager's machine.
 
 During this process I created a bokeh script with several command line options to specify which data should be shown over what time frame. While running this over the course of a week or so, I struggled every morning to remember the right set of command line options to get the data I wanted on the external-facing IP address on a fresh port.
