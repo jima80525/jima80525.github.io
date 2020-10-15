@@ -4,6 +4,7 @@ title: Snowboarding Coder
 description: Musing from an old hacker
 markdown: kramdown
 permalink: /newblog/:year/:month/:day/:title
+author: jima
 
 email: jima.coding@gmail.com
 baseurl: "" # the subpath of your site, e.g. /blog
