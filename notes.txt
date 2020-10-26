@@ -1,0 +1,23 @@
+https://jima80525.github.io/
+
+getting started:  https://guides.github.com/features/pages/
+
+custom domain to namecheap https://focalise.ie/how-to-add-a-custom-domain-to-github-pages-with-namecheap/
+
+custom domain google - might have better ip addresses:  https://medium.com/@hossainkhan/using-custom-domain-for-github-pages-86b303d3918a
+
+----------------------------
+
+personal github page:
+
+various people with different pages: https://www.aboutmonica.com/blog/how-to-create-a-github-profile-readme
+
+antother: https://twitter.com/TerryTangYuan/status/1281590275660537858?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1281590275660537858%7Ctwgr%5Eshare_3&ref_url=https%3A%2F%2Fwww.aboutmonica.com%2Fblog%2Fhow-to-create-a-github-profile-readme
+
+one person's raw page: https://raw.githubusercontent.com/terrytangyuan/terrytangyuan/master/README.md
+
+Simon's cool autoupdated page: https://github.com/simonw
+
+https://twitter.com/simonw/status/1281435464474324993?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1281435464474324993%7Ctwgr%5Eshare_3&ref_url=https%3A%2F%2Fwww.aboutmonica.com%2Fblog%2Fhow-to-create-a-github-profile-readme
+
+https://simonwillison.net/2020/Apr/20/self-rewriting-readme/
