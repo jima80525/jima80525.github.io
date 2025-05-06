@@ -1,10 +1,10 @@
 PUBLISHING:
 I just did:
-invoke build
-git checkout master
-meld output .
-(copy changed files over to master)
-commit and push those changes
+* git checkout source
+* invoke build
+* git checkout master
+* meld output .  (copy changed files over to master)
+* commit and push those changes
 
 
 
