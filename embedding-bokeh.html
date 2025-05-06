@@ -11,12 +11,12 @@
 
     <title>Embedding Bokeh - Snowboarding Coder</title>
 
-        <link rel="stylesheet" href="/theme/css/bootstrap.darkly.min.css" type="text/css"/>
+        <link rel="stylesheet" href="./theme/css/bootstrap.darkly.min.css" type="text/css"/>
 
-    <link href="/theme/css/fontawesome-all.min.css" rel="stylesheet" />
-    <link href="/theme/css/pygments/xcode.css" rel="stylesheet" />
+    <link href="./theme/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="./theme/css/pygments/xcode.css" rel="stylesheet" />
 
-    <link href="/theme/css/pelican-twitchy.min.css" rel="stylesheet" />
+    <link href="./theme/css/pelican-twitchy.min.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,8 +26,6 @@
     <![endif]-->
     
     <!-- Feeds -->
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Snowboarding Coder ATOM Feed" />
 </head>
 <body data-spy="scroll" data-target="#scrollspy">
     <div id="wrapper">
@@ -35,13 +33,13 @@
         <div id="sidebar-wrapper-small" class="twitchy-background">
             <ul id="accordion-small" class="sidebar-nav sidebar-nav-small">
                 <li>
-        <a href="" title="Snowboarding Coder" class="collapsed">
+        <a href="." title="Snowboarding Coder" class="collapsed">
             <span class="fas fa-home"></span>
         </a>
     </li>
                 <li class="nav-divider"></li>
                 <li>
-        <a href="/archives.html" title="Recent Articles" class="collapsed">
+        <a href="./archives.html" title="Recent Articles" class="collapsed">
             <span class="fas fa-th-list"></span>
         </a>
     </li>
@@ -53,12 +51,12 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-share-small" class="collapse ">
                     <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=/embedding-bokeh.html" title="Share via Facebook" target="popup">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./embedding-bokeh.html" title="Share via Facebook" target="popup">
                             <i class="fas fa-facebook-square padding-small"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://plus.google.com/share?url=/embedding-bokeh.html" title="Share via Google+" target="popup">
+                        <a href="https://plus.google.com/share?url=./embedding-bokeh.html" title="Share via Google+" target="popup">
                             <i class="fas fa-google-plus padding-small"></i>
                         </a>
                     </li>
@@ -93,13 +91,13 @@
         <div id="sidebar-wrapper" class="twitchy-background">
             <ul id="accordion" class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="/">
+                    <a href="./">
                             <span class="fas fa-home padding-small"></span>
                             Snowboarding Coder
                     </a>
                 </li>
                     <li>
-                        <a href="/archives.html">
+                        <a href="./archives.html">
                             <span class="fas fa-th-list padding-small"></span>
                             Recent Articles
                         </a>
@@ -113,13 +111,13 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-share" class="sidebar_submenu collapse ">
                     <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=/embedding-bokeh.html" target="popup">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./embedding-bokeh.html" target="popup">
                             <i class="fab fa-facebook-square padding-small"></i>
                             Facebook
                         </a>
                     </li>
                     <li>
-                        <a href="https://plus.google.com/share?url=/embedding-bokeh.html" target="popup">
+                        <a href="https://plus.google.com/share?url=./embedding-bokeh.html" target="popup">
                             <i class="fab fa-google-plus-square padding-small"></i>
                             Google+
                         </a>
@@ -162,7 +160,7 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-pages" class="sidebar_submenu collapse ">
                     <li>
-                        <a href="/pages/about.html">
+                        <a href="./pages/about.html">
                             <i class="fas fa-file-alt padding-small"></i>
                             About
                         </a>
@@ -187,7 +185,7 @@
             <div class="col-lg-9">
                 <header class="page-header">
                     <h1>
-                        <a href="/embedding-bokeh.html"
+                        <a href="./embedding-bokeh.html"
                            rel="bookmark"
                            title="Permalink to Embedding Bokeh">
                             Embedding Bokeh
@@ -200,7 +198,7 @@
                 <i class="fa fa-calendar padding-small"></i><time datetime="2020-01-13T00:00:00-07:00"> Mon 13 January 2020</time>
             </span>
             <span class="category">
-                <i class="fa fa-folder-open padding-small"></i><a href="/category/posts.html">Posts</a>
+                <i class="fa fa-folder-open padding-small"></i><a href="./category/posts.html">Posts</a>
             </span>
         </small>
     </div>
@@ -218,8 +216,8 @@
 <p>Below we'll walk through my current solution, which is not perfect, but works for what I need. Hopefully it can help you out as well.</p>
 <h2>Command Line Args</h2>
 <p>Let's start with the user interface. For this example, you'll just have one option for your graph and two options to pass to bokeh:</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_command_line_args</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; Read command line args, of course.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_command_line_args</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Read command line args, of course.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;--blue&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -238,8 +236,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">args</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
     <span class="k">return</span> <span class="n">args</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>The function starts with the graph option, <code>-b</code> which changes the color of the line from red to blue. You will expand this out to be whatever options you need to pass to your script, or remove it if there are none. We'll see below how this gets passed to the "script" part of my program.</p>
 <p>The next option is <code>-e</code> which switches the bokeh server from <code>localhost</code> mode to serving the web page on an externally facing IP address. This option is just a bool, but we need to provide bokeh with a full IP address to use. You'll see that code below.</p>
@@ -251,7 +248,7 @@
 <p>Now you can go and look at the IP address code.</p>
 <h2>Get Local IP Address</h2>
 <p>The code shown here is based closely on a <a href="https://stackoverflow.com/a/166589/6843734">Stack Overflow</a> answer:</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_local_ip_addr</span><span class="p">(</span><span class="n">external</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_local_ip_addr</span><span class="p">(</span><span class="n">external</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">external</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;localhost&quot;</span>
 
@@ -262,15 +259,14 @@
     <span class="n">ip_addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">ip_addr</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>As the comment indicates, this is not foolproof but should work for many reasonable situations. It works by opening a network socket to a public DNS server run by Google. It should work with any other reliable IP address that is reachable from your machine.</p>
 <p>Once the socket is open, you use <code>.getsockname()</code> which returns the IP address and port on the local machine for that socket.</p>
 <p>Again, there are situations in which this will not work, but generally it will.</p>
 <h2>Starting the Server</h2>
 <p>Once we have the command line options set up, we can get to the actual bokeh part of the code. Here is <code>start_server()</code>:</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_server</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">start_server</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="k">while</span> <span class="n">attempts</span><span class="p">:</span>
         <span class="n">attempts</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="k">try</span><span class="p">:</span>
@@ -290,20 +286,18 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ex</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to find available port&quot;</span><span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>There's a bunch of code here, but the main part is creating the <code>Server</code> obejct. In <code>get_command_line_args()</code> we made sure that both <code>address</code> and <code>port</code> are set to valid values, <code>localhost</code> and <code>5006</code> by default.</p>
 <p>These values and the passed-in <code>url</code> are used to create the <code>Server</code>:</p>
-<div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span>
     <span class="p">{</span><span class="n">url</span><span class="p">:</span> <span class="n">graph_it</span><span class="p">},</span>
     <span class="n">num_procs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span>
     <span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span>
     <span class="n">allow_websocket_origin</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">address</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,],</span>
 <span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>The first parameter to the constructor maps the passed-in <code>url</code> to <code>graph_it()</code> which is a basic bokeh plot I shamelessly stole from an example online.</p>
 <p>The <code>num_procs</code> parameter allows bokeh to use multiprocessing for the underlying tornado server to handle multiple connections. For my example, one was sufficient, but it could be handy to increase in some circumstances.</p>
@@ -313,18 +307,17 @@
 <h2>The Graphing Function</h2>
 <p>The graphing function is the actual bokeh script you want to run. This example is the shortest function I could find without too much effort. You should replace this with the script you're passing in to bokeh.</p>
 <p>The interesting portion is the hack I for the color arguments. There is a way to pass command line arguments through bokeh to the script it is calling, and I suspect there's an elegant way to do something similar here, but I'll admit I went for the easy round and just made the <code>args</code> parameter a global and referenced in here:</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">graph_it</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">graph_it</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
     <span class="k">global</span> <span class="n">args</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;My Line Plot&quot;</span><span class="p">)</span>
     <span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
     <span class="n">doc</span><span class="o">.</span><span class="n">add_root</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>If you figure out a better solution, please contact me and I'll update the example! I'd love to see it.</p>
 <h2>Running the I/O Loop</h2>
 <p>Finally you've hit the main portion of the script which puts all these pieces together:</p>
-<div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">get_command_line_args</span><span class="p">()</span>
     <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
     <span class="n">address</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">ip_addr</span>
@@ -342,8 +335,7 @@
         <span class="n">server</span><span class="o">.</span><span class="n">io_loop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Shutting Down&quot;</span><span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>You start by reading the command line arguments and setting up the <code>port</code>, <code>address</code>, and <code>url</code> parameters used to run the server.</p>
 <p>Next you create the server and start it. Note that this routine passed back the port that it selected as it can make many attempts to find an open port.</p>
@@ -352,7 +344,7 @@
 <p>I hope someone found this helpful as I was happy with the solution for my particular problem and I was unable to find a good source of how to do this in my searching.</p>
 <p>For completeness I'll include the full script below. Please contact me if you have questions or suggestions to make this article or code better!</p>
 <p>Here's the full script:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span>
 <span class="kn">from</span> <span class="nn">bokeh.server.server</span> <span class="kn">import</span> <span class="n">Server</span>
@@ -374,7 +366,7 @@
 
 
 <span class="k">def</span> <span class="nf">get_command_line_args</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; Read command line args, of course.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Read command line args, of course.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;--blue&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -442,7 +434,7 @@
         <span class="n">server</span><span class="o">.</span><span class="n">io_loop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Shutting Down&quot;</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
                 </div>
                 <footer class="text-right">
                     <p>- Jim Anderson</p>
@@ -470,11 +462,11 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery Version 1.11.2 -->
-    <script src="/theme/js/jquery-1.11.2.min.js"></script>
+    <script src="./theme/js/jquery-1.11.2.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="/theme/js/bootstrap.min.js"></script>
+    <script src="./theme/js/bootstrap.min.js"></script>
     <!-- twitchy Script -->
-    <script src="/theme/js/pelican_twitchy.min.js"></script>
+    <script src="./theme/js/pelican_twitchy.min.js"></script>
 
 </body>
 </html>

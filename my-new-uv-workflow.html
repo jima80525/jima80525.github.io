@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Jim Anderson" />
+        <meta name="description" content="I&#39;ve recently changed my python project workflow based on a great write-up by Trey Hunner. Trey did a great job of explaining the details of what uv is and why you might want to use it, and also set up some scripts for zsh to recreate a workflow that is …" />
+
+
+    <title>My New `uv` Workflow - Snowboarding Coder</title>
+
+        <link rel="stylesheet" href="./theme/css/bootstrap.darkly.min.css" type="text/css"/>
+
+    <link href="./theme/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="./theme/css/pygments/xcode.css" rel="stylesheet" />
+
+    <link href="./theme/css/pelican-twitchy.min.css" rel="stylesheet" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Feeds -->
+</head>
+<body data-spy="scroll" data-target="#scrollspy">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper-small" class="twitchy-background">
+            <ul id="accordion-small" class="sidebar-nav sidebar-nav-small">
+                <li>
+        <a href="." title="Snowboarding Coder" class="collapsed">
+            <span class="fas fa-home"></span>
+        </a>
+    </li>
+                <li class="nav-divider"></li>
+                <li>
+        <a href="./archives.html" title="Recent Articles" class="collapsed">
+            <span class="fas fa-th-list"></span>
+        </a>
+    </li>
+                <li class="nav-divider"></li>
+                <li id="share-small">
+                    <a data-toggle="collapse" data-parent="#accordion-small" href="#collapse-share-small" title="Share" class="collapsed">
+                        <i class="fas fa-share-alt padding-small"></i>
+                    </a>
+                </li>
+                <li class="panel anti-panel"><ul id="collapse-share-small" class="collapse ">
+                    <li>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./my-new-uv-workflow.html" title="Share via Facebook" target="popup">
+                            <i class="fas fa-facebook-square padding-small"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://plus.google.com/share?url=./my-new-uv-workflow.html" title="Share via Google+" target="popup">
+                            <i class="fas fa-google-plus padding-small"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" title="Share via Twitter" target="popup">
+                            <i class="fas fa-twitter-square padding-small"></i>
+                        </a>
+                    </li>
+                </ul></li>
+                <li class="nav-divider"></li>
+                <li>
+                    <a data-toggle="collapse" data-parent="#accordion-small" href="#collapse-social-small" title="Social" class="collapsed">
+                        <i class="fas fa-users padding-small"></i>
+                    </a>
+                </li>
+                <li class="panel anti-panel"><ul id="collapse-social-small" class="collapse ">
+                    <li>
+                        <a href="https://github.com/jima80525" title="GitHub"><i class="fab fa-github-square padding-small"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/jimande75053775" title="Twitter"><i class="fab fa-twitter-square padding-small"></i></a>
+                    </li>
+                </ul></li>
+                <li class="nav-divider"></li>
+                <li>
+        <a href="#" title="Back to top" class="collapsed">
+            <span class="fas fa-arrow-up"></span>
+        </a>
+    </li>
+            </ul>
+        </div>
+        <div id="sidebar-wrapper" class="twitchy-background">
+            <ul id="accordion" class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="./">
+                            <span class="fas fa-home padding-small"></span>
+                            Snowboarding Coder
+                    </a>
+                </li>
+                    <li>
+                        <a href="./archives.html">
+                            <span class="fas fa-th-list padding-small"></span>
+                            Recent Articles
+                        </a>
+                    </li>
+                <li class="nav-divider"></li>
+                <li id="share">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-share" title="Share" class="collapsed">
+                        <i class="fas fa-share-alt padding-small"></i>
+                        Share
+                    </a>
+                </li>
+                <li class="panel anti-panel"><ul id="collapse-share" class="sidebar_submenu collapse ">
+                    <li>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./my-new-uv-workflow.html" target="popup">
+                            <i class="fab fa-facebook-square padding-small"></i>
+                            Facebook
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://plus.google.com/share?url=./my-new-uv-workflow.html" target="popup">
+                            <i class="fab fa-google-plus-square padding-small"></i>
+                            Google+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" target="popup">
+                            <i class="fab fa-twitter-square padding-small"></i>
+                            Twitter
+                        </a>
+                    </li>
+                </ul></li>
+                <li class="nav-divider"></li>
+                <li>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-social">
+                        <i class="fas fa-users padding-small"></i>
+                        Contact
+                    </a>
+                </li>
+                <li class="panel anti-panel"><ul id="collapse-social" class="sidebar_submenu collapse ">
+                    <li>
+                        <a href="https://github.com/jima80525" title="GitHub">
+                            <i class="fab fa-github-square padding-small"></i>
+                            GitHub
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/jimande75053775" title="Twitter">
+                            <i class="fab fa-twitter-square padding-small"></i>
+                            Twitter
+                        </a>
+                    </li>
+                </ul></li>
+                
+                <li class="nav-divider"></li>
+                <li>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-pages">
+                        <i class="fas fa-folder-open padding-small"></i>
+                        Pages
+                    </a>
+                </li>
+                <li class="panel anti-panel"><ul id="collapse-pages" class="sidebar_submenu collapse ">
+                    <li>
+                        <a href="./pages/about.html">
+                            <i class="fas fa-file-alt padding-small"></i>
+                            About
+                        </a>
+                    </li>
+                </ul></li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- open/close sidebar -->
+        <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
+            <span id="right-arrow" class="fas fa-chevron-right"  title="expand sidebar"></span>
+            <span id="left-arrow" class="fas fa-chevron-left" title="minimize sidebar"></span>
+        </a>
+       <!-- /open/close sidebar -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+<section id="content">
+    <article>
+        <div class="row">
+            <div class="col-lg-9">
+                <header class="page-header">
+                    <h1>
+                        <a href="./my-new-uv-workflow.html"
+                           rel="bookmark"
+                           title="Permalink to My New `uv` Workflow">
+                            My New `uv` Workflow
+                        </a>
+                        <small>
+<div class="post-info">
+    <div class="publish-info-block">
+        <small>
+            <span class="published">
+                <i class="fa fa-calendar padding-small"></i><time datetime="2025-05-05T00:00:00-06:00"> Mon 05 May 2025</time>
+            </span>
+            <span class="category">
+                <i class="fa fa-folder-open padding-small"></i><a href="./category/posts.html">Posts</a>
+            </span>
+        </small>
+    </div>
+</div><!-- /.post-info -->                        </small>
+                    </h1>
+                </header>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="entry-content">
+                    <p>I've recently changed my python project workflow based on a great write-up by <a href="https://treyhunner.com/2024/10/switching-from-virtualenvwrapper-to-direnv-starship-and-uv/">Trey Hunner</a>.</p>
+<p>Trey did a great job of explaining the details of what <code>uv</code> is and why you might want to use it, and also set up some scripts for zsh to recreate a workflow that is quite similar to what I've been using for several years.</p>
+<p>I have shamelessly copied his work, ported it to bash ('cause I'm old-school) and expanded it a bit.</p>
+<h2>The Workflow</h2>
+<p>Before going into the details of how to set up this system, I'll walk you through what it looks like in operation. There are three commands, one used when creating a new project, one used in normal, day-to-day operations, and one primarily for debugging things.</p>
+<p>To set up a new project in this workflow, you first need to <code>cd</code> to the project's directory. It doesn't matter if it already exists, usually for me it does, but it can be an empty directory, too.</p>
+<p>Once you're in the project directory, you then use the <code>venv</code> command (which is shown below in a custom bash script) to create the virtual environment, set up <code>direnv</code> to use this directory, and install the <code>requirement.txt</code> file if it's present.</p>
+<p>The <code>venv</code> script also does a little bookkeeping in the background to help with the second command, the day-to-day one, <code>workon</code>.</p>
+<p>To use the <code>workon</code> command (again, shown in the next section), you simply type <code>workon</code> followed by the name of the project. The command will change to you to project's directory and activate the virtualenvironment for you.</p>
+<p>Finally, for completeness (and to help me debug things while setting this up), there is the <code>rmvenv</code> which attempts to remove all traces left by the <code>venv</code> command.</p>
+<h2>The Setup</h2>
+<p>To get this workflow to operate, you will need to install <a href="https://docs.astral.sh/uv/getting-started/installation/"><code>uv</code></a> <strong>and</strong> <a href="https://direnv.net/docs/installation.html"><code>direnv</code></a>.</p>
+<p>From there you can add the code snippet below to your <code>.bashrc</code> file (or however you like to have these things) and source that file.</p>
+<p>In his article, Trey also goes into detail about using <code>starship</code> which I also use, but I feel that, while that's pretty cool, it's not completely necessary to getting this workflow running.</p>
+<p>If you're interested in making your prompt look cool with python venv and version info, I'd recommand starship and Trey's article referenced above.</p>
+<p>Without further ado, here's the code, which can also be found <a href="https://github.com/jima80525/bin/blob/ae2dee4a786dd264b07092021ef2092dfec3c198/bashrc_to_copy_to_home_dir#L91">here</a></p>
+<p>```bash</p>
+<h1>direnv functions to give venv and workon commands from:</h1>
+<h1>https://treyhunner.com/2024/10/switching-from-virtualenvwrapper-to-direnv-starship-and-uv/</h1>
+<p>venv() {
+    local venv_name
+    local projects_file="$HOME/.projects"
+    local dir_name=$(basename "$PWD")</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># If there are no arguments or the last argument starts with a dash, use dir_name</span>
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">$</span><span class="err">#</span><span class="w"> </span><span class="o">-</span><span class="n">eq</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[[</span><span class="w"> </span><span class="s">&quot;${!#}&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-*</span><span class="w"> </span><span class="p">]];</span><span class="w"> </span><span class="n">then</span>
+<span class="w">    </span><span class="n">venv_name</span><span class="o">=</span><span class="s">&quot;$dir_name&quot;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="n">venv_name</span><span class="o">=</span><span class="s">&quot;${!#}&quot;</span>
+<span class="w">    </span><span class="n">set</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="s">&quot;${@:1:$#-1}&quot;</span>
+<span class="n">fi</span>
+
+<span class="cp"># Check if .envrc already exists</span>
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="p">.</span><span class="n">envrc</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="w">    </span><span class="n">echo</span><span class="w"> </span><span class="s">&quot;Error: .envrc already exists&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="mi">2</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">fi</span>
+
+<span class="k">if</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="o">-</span><span class="n">Fq</span><span class="w"> </span><span class="n">$</span><span class="p">{</span><span class="n">venv_name</span><span class="p">}</span><span class="w"> </span><span class="n">$</span><span class="p">{</span><span class="n">projects_file</span><span class="p">};</span><span class="w"> </span><span class="n">then</span>
+<span class="w">    </span><span class="n">echo</span><span class="w"> </span><span class="s">&quot;Error: a project named ${venv_name} already exists&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="mi">2</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">fi</span>
+
+<span class="cp"># Create venv</span>
+<span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="n">venv</span><span class="w"> </span><span class="o">--</span><span class="n">seed</span><span class="w"> </span><span class="o">--</span><span class="n">prompt</span><span class="w"> </span><span class="s">&quot;$venv_name&quot;</span><span class="w"> </span><span class="s">&quot;$@&quot;</span><span class="w"> </span><span class="p">.</span><span class="n">venv</span><span class="p">;</span><span class="w"> </span><span class="n">then</span>
+<span class="w">    </span><span class="n">echo</span><span class="w"> </span><span class="s">&quot;Error: Failed to create venv&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="mi">2</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">fi</span>
+
+<span class="n">source</span><span class="w"> </span><span class="p">.</span><span class="n">venv</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">activate</span>
+
+<span class="cp"># Create .envrc</span>
+<span class="n">echo</span><span class="w"> </span><span class="s">&quot;layout python&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">envrc</span>
+
+<span class="cp"># Append project name and directory to projects file</span>
+<span class="n">echo</span><span class="w"> </span><span class="s">&quot;${venv_name} = ${PWD}&quot;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">$projects_file</span>
+
+<span class="cp"># Allow direnv to immediately activate the virtual environment</span>
+<span class="n">direnv</span><span class="w"> </span><span class="n">allow</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="w">    </span><span class="cp"># Install requirements if requirements.txt exists</span>
+<span class="w">    </span><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">fi</span>
+</code></pre></div>
+
+<p>}</p>
+<p>workon() {
+    local project_name="$1"
+    local projects_file="$HOME/.projects"
+    local project_dir
+    # Check for projects config file
+    if [[ ! -f "$projects_file" ]]; then
+        echo "Error: $projects_file not found" &gt;&amp;2
+        return 1
+    fi</p>
+<div class="highlight"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nt">Get</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">directory</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">given</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">name</span>
+<span class="nt">project_dir</span><span class="o">=$(</span><span class="nt">grep</span><span class="w"> </span><span class="nt">-E</span><span class="w"> </span><span class="s2">&quot;^$project_name\s*=&quot;</span><span class="w"> </span><span class="s2">&quot;$projects_file&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nt">sed</span><span class="w"> </span><span class="s1">&#39;s/^</span><span class="cp">[</span><span class="p">^</span><span class="o">=</span><span class="cp">]</span><span class="s1">*=\s*//&#39;</span><span class="o">)</span>
+
+<span class="err">#</span><span class="w"> </span><span class="nt">Ensure</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">directory</span><span class="w"> </span><span class="nt">was</span><span class="w"> </span><span class="nt">found</span>
+<span class="nt">if</span><span class="w"> </span><span class="cp">[</span><span class="err">[</span><span class="w"> </span><span class="na">-z</span><span class="w"> </span><span class="s2">&quot;$project_dir&quot;</span><span class="w"> </span><span class="cp">]</span><span class="o">];</span><span class="w"> </span><span class="nt">then</span>
+<span class="w">    </span><span class="nt">echo</span><span class="w"> </span><span class="s2">&quot;Error: Project &#39;$project_name&#39; not found in $projects_file&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="nt">2</span>
+<span class="w">    </span><span class="nt">return</span><span class="w"> </span><span class="nt">1</span>
+<span class="nt">fi</span>
+
+<span class="err">#</span><span class="w"> </span><span class="nt">Ensure</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">directory</span><span class="w"> </span><span class="nt">exists</span>
+<span class="nt">if</span><span class="w"> </span><span class="cp">[</span><span class="err">[</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="na">-d</span><span class="w"> </span><span class="s2">&quot;$project_dir&quot;</span><span class="w"> </span><span class="cp">]</span><span class="o">];</span><span class="w"> </span><span class="nt">then</span>
+<span class="w">    </span><span class="nt">echo</span><span class="w"> </span><span class="s2">&quot;Error: Directory $project_dir does not exist&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="nt">2</span>
+<span class="w">    </span><span class="nt">return</span><span class="w"> </span><span class="nt">1</span>
+<span class="nt">fi</span>
+
+<span class="err">#</span><span class="w"> </span><span class="nt">Change</span><span class="w"> </span><span class="nt">directories</span>
+<span class="nt">cd</span><span class="w"> </span><span class="s2">&quot;$project_dir&quot;</span>
+</code></pre></div>
+
+<p>}</p>
+<p>rmvenv() {
+    # Remove a virtual environment
+    local venv_name
+    local projects_file="$HOME/.projects"
+    local dir_name=$(basename "$PWD")</p>
+<div class="highlight"><pre><span></span><code>#<span class="w"> </span>If<span class="w"> </span>there<span class="w"> </span>are<span class="w"> </span>no<span class="w"> </span>arguments<span class="w"> </span>or<span class="w"> </span>the<span class="w"> </span>last<span class="w"> </span>argument<span class="w"> </span>starts<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>dash,<span class="w"> </span>use<span class="w"> </span>dir_name
+if<span class="w"> </span>[<span class="w"> </span>$#<span class="w"> </span>-eq<span class="w"> </span>0<span class="w"> </span>]<span class="w"> </span>||<span class="w"> </span>[[<span class="w"> </span>&quot;<span class="cp">${</span><span class="err">!</span><span class="c1">#</span><span class="cp">}</span>&quot;<span class="w"> </span>==<span class="w"> </span>-*<span class="w"> </span>]];<span class="w"> </span>then
+<span class="w">    </span>venv_name=&quot;<span class="nv">$dir_name</span>&quot;
+else
+<span class="w">    </span>venv_name=&quot;<span class="cp">${</span><span class="err">!</span><span class="c1">#</span><span class="cp">}</span>&quot;
+<span class="w">    </span>set<span class="w"> </span>--<span class="w"> </span>&quot;<span class="cp">${</span><span class="o">@</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="err">$</span><span class="c1">#-1</span><span class="cp">}</span>&quot;
+<span class="w">    </span>workon<span class="w"> </span><span class="nv">$venv_name</span>
+fi
+
+#<span class="w"> </span>Check<span class="w"> </span>if<span class="w"> </span>.envrc<span class="w"> </span>already<span class="w"> </span>exists
+if<span class="w"> </span>[<span class="w"> </span>-f<span class="w"> </span>.envrc<span class="w"> </span>];<span class="w"> </span>then
+<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span>.envrc&quot;
+<span class="w">    </span>rm<span class="w"> </span>.envrc
+fi
+
+if<span class="w"> </span>[<span class="w"> </span>-d<span class="w"> </span>.venv<span class="w"> </span>];<span class="w"> </span>then
+<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span>.venv&quot;
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>.venv
+fi
+
+if<span class="w"> </span>[<span class="w"> </span>-d<span class="w"> </span>.direnv<span class="w"> </span>];<span class="w"> </span>then
+<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span>.direnv&quot;
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>.direnv
+fi
+
+if<span class="w"> </span>grep<span class="w"> </span>-Fq<span class="w"> </span><span class="cp">${</span><span class="n">venv_name</span><span class="cp">}</span><span class="w"> </span><span class="cp">${</span><span class="n">projects_file</span><span class="cp">}</span>;<span class="w"> </span>then
+<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span><span class="cp">${</span><span class="n">venv_name</span><span class="cp">}</span><span class="w"> </span>from<span class="w"> </span><span class="cp">${</span><span class="n">projects_file</span><span class="cp">}</span>&quot;
+<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span>&quot;/^<span class="cp">${</span><span class="n">venv_name</span><span class="cp">}</span>/d&quot;<span class="w"> </span><span class="cp">${</span><span class="n">projects_file</span><span class="cp">}</span>
+fi
+</code></pre></div>
+
+<p>}
+```</p>
+                </div>
+                <footer class="text-right">
+                    <p>- Jim Anderson</p>
+                </footer>
+            </div>
+        </div>
+    </article>
+</section>
+<footer>
+    <hr>
+    <div class="row">
+        <div class="col-lg-9 text-center">
+            <p><small>
+                Built by <a href="http://docs.getpelican.com/en/latest">Pelican</a> / <a href="https://github.com/ingwinlu/pelican-twitchy">pelican-twitchy</a>
+                &middot;                      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+
+            </small></p>
+        </div>
+    </div>
+</footer>            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery Version 1.11.2 -->
+    <script src="./theme/js/jquery-1.11.2.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="./theme/js/bootstrap.min.js"></script>
+    <!-- twitchy Script -->
+    <script src="./theme/js/pelican_twitchy.min.js"></script>
+
+</body>
+</html>

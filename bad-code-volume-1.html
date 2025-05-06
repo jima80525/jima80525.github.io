@@ -11,12 +11,12 @@
 
     <title>Bad Code - Volume 1 - Snowboarding Coder</title>
 
-        <link rel="stylesheet" href="/theme/css/bootstrap.darkly.min.css" type="text/css"/>
+        <link rel="stylesheet" href="./theme/css/bootstrap.darkly.min.css" type="text/css"/>
 
-    <link href="/theme/css/fontawesome-all.min.css" rel="stylesheet" />
-    <link href="/theme/css/pygments/xcode.css" rel="stylesheet" />
+    <link href="./theme/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="./theme/css/pygments/xcode.css" rel="stylesheet" />
 
-    <link href="/theme/css/pelican-twitchy.min.css" rel="stylesheet" />
+    <link href="./theme/css/pelican-twitchy.min.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,8 +26,6 @@
     <![endif]-->
     
     <!-- Feeds -->
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Snowboarding Coder ATOM Feed" />
 </head>
 <body data-spy="scroll" data-target="#scrollspy">
     <div id="wrapper">
@@ -35,13 +33,13 @@
         <div id="sidebar-wrapper-small" class="twitchy-background">
             <ul id="accordion-small" class="sidebar-nav sidebar-nav-small">
                 <li>
-        <a href="" title="Snowboarding Coder" class="collapsed">
+        <a href="." title="Snowboarding Coder" class="collapsed">
             <span class="fas fa-home"></span>
         </a>
     </li>
                 <li class="nav-divider"></li>
                 <li>
-        <a href="/archives.html" title="Recent Articles" class="collapsed">
+        <a href="./archives.html" title="Recent Articles" class="collapsed">
             <span class="fas fa-th-list"></span>
         </a>
     </li>
@@ -53,12 +51,12 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-share-small" class="collapse ">
                     <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=/bad-code-volume-1.html" title="Share via Facebook" target="popup">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./bad-code-volume-1.html" title="Share via Facebook" target="popup">
                             <i class="fas fa-facebook-square padding-small"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://plus.google.com/share?url=/bad-code-volume-1.html" title="Share via Google+" target="popup">
+                        <a href="https://plus.google.com/share?url=./bad-code-volume-1.html" title="Share via Google+" target="popup">
                             <i class="fas fa-google-plus padding-small"></i>
                         </a>
                     </li>
@@ -93,13 +91,13 @@
         <div id="sidebar-wrapper" class="twitchy-background">
             <ul id="accordion" class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="/">
+                    <a href="./">
                             <span class="fas fa-home padding-small"></span>
                             Snowboarding Coder
                     </a>
                 </li>
                     <li>
-                        <a href="/archives.html">
+                        <a href="./archives.html">
                             <span class="fas fa-th-list padding-small"></span>
                             Recent Articles
                         </a>
@@ -113,13 +111,13 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-share" class="sidebar_submenu collapse ">
                     <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=/bad-code-volume-1.html" target="popup">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./bad-code-volume-1.html" target="popup">
                             <i class="fab fa-facebook-square padding-small"></i>
                             Facebook
                         </a>
                     </li>
                     <li>
-                        <a href="https://plus.google.com/share?url=/bad-code-volume-1.html" target="popup">
+                        <a href="https://plus.google.com/share?url=./bad-code-volume-1.html" target="popup">
                             <i class="fab fa-google-plus-square padding-small"></i>
                             Google+
                         </a>
@@ -162,7 +160,7 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-pages" class="sidebar_submenu collapse ">
                     <li>
-                        <a href="/pages/about.html">
+                        <a href="./pages/about.html">
                             <i class="fas fa-file-alt padding-small"></i>
                             About
                         </a>
@@ -187,7 +185,7 @@
             <div class="col-lg-9">
                 <header class="page-header">
                     <h1>
-                        <a href="/bad-code-volume-1.html"
+                        <a href="./bad-code-volume-1.html"
                            rel="bookmark"
                            title="Permalink to Bad Code - Volume 1">
                             Bad Code - Volume 1
@@ -200,7 +198,7 @@
                 <i class="fa fa-calendar padding-small"></i><time datetime="2018-04-16T00:00:00-06:00"> Mon 16 April 2018</time>
             </span>
             <span class="category">
-                <i class="fa fa-folder-open padding-small"></i><a href="/category/posts.html">Posts</a>
+                <i class="fa fa-folder-open padding-small"></i><a href="./category/posts.html">Posts</a>
             </span>
         </small>
     </div>
@@ -218,23 +216,22 @@
 <p>Now, I know what many of you, at least those of you that are sane, are thinking: "duh, sort the list, take the first max_number_found".   If so, bonus points for you.</p>
 <p>Alas, the developers who generated this code didn't think that was a good idea.  No.  That would be wasteful.</p>
 <p>I'll show you the code first, then we'll walk through the insanity.</p>
-<div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="n">startingThreshold</span><span class="p">;</span>
-<span class="k">do</span> <span class="p">{</span>
-   <span class="n">number_found</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-   <span class="n">threshold</span> <span class="o">+=</span> <span class="n">threshold_increment</span><span class="p">;</span>
-   <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">254</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span><span class="p">(</span><span class="n">rectangles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">area</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span> <span class="p">{</span>
-         <span class="n">number_found</span><span class="o">++</span><span class="p">;</span>
-      <span class="p">}</span>
-   <span class="p">}</span>    
-<span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="n">number_found</span> <span class="o">&gt;</span> <span class="n">max_number_found</span><span class="p">);</span>
-<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">254</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">rectangles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">area</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span> <span class="p">{</span>
-       <span class="c1">// add rectangle[i] to list</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="n">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">startingThreshold</span><span class="p">;</span>
+<span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">number_found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">   </span><span class="n">threshold</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">threshold_increment</span><span class="p">;</span>
+<span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">254</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">rectangles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">area</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">threshold</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="n">number_found</span><span class="o">++</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">}</span><span class="w">    </span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="p">(</span><span class="n">number_found</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">max_number_found</span><span class="p">);</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">254</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">rectangles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">area</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">threshold</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="c1">// add rectangle[i] to list</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>What Does <strong>That</strong> Do?</h2>
 <p>For starters I should point out that <code>startingThreshold</code> and <code>threshold_increment</code> are passed in to the function.  Their values don't actually matter to much in terms of what the algorithm does, though they might effect the performance.</p>
@@ -272,11 +269,11 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery Version 1.11.2 -->
-    <script src="/theme/js/jquery-1.11.2.min.js"></script>
+    <script src="./theme/js/jquery-1.11.2.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="/theme/js/bootstrap.min.js"></script>
+    <script src="./theme/js/bootstrap.min.js"></script>
     <!-- twitchy Script -->
-    <script src="/theme/js/pelican_twitchy.min.js"></script>
+    <script src="./theme/js/pelican_twitchy.min.js"></script>
 
 </body>
 </html>

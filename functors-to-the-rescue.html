@@ -11,12 +11,12 @@
 
     <title>Functors to the Rescue! - Snowboarding Coder</title>
 
-        <link rel="stylesheet" href="/theme/css/bootstrap.darkly.min.css" type="text/css"/>
+        <link rel="stylesheet" href="./theme/css/bootstrap.darkly.min.css" type="text/css"/>
 
-    <link href="/theme/css/fontawesome-all.min.css" rel="stylesheet" />
-    <link href="/theme/css/pygments/xcode.css" rel="stylesheet" />
+    <link href="./theme/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="./theme/css/pygments/xcode.css" rel="stylesheet" />
 
-    <link href="/theme/css/pelican-twitchy.min.css" rel="stylesheet" />
+    <link href="./theme/css/pelican-twitchy.min.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,8 +26,6 @@
     <![endif]-->
     
     <!-- Feeds -->
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Snowboarding Coder ATOM Feed" />
 </head>
 <body data-spy="scroll" data-target="#scrollspy">
     <div id="wrapper">
@@ -35,13 +33,13 @@
         <div id="sidebar-wrapper-small" class="twitchy-background">
             <ul id="accordion-small" class="sidebar-nav sidebar-nav-small">
                 <li>
-        <a href="" title="Snowboarding Coder" class="collapsed">
+        <a href="." title="Snowboarding Coder" class="collapsed">
             <span class="fas fa-home"></span>
         </a>
     </li>
                 <li class="nav-divider"></li>
                 <li>
-        <a href="/archives.html" title="Recent Articles" class="collapsed">
+        <a href="./archives.html" title="Recent Articles" class="collapsed">
             <span class="fas fa-th-list"></span>
         </a>
     </li>
@@ -53,12 +51,12 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-share-small" class="collapse ">
                     <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=/functors-to-the-rescue.html" title="Share via Facebook" target="popup">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./functors-to-the-rescue.html" title="Share via Facebook" target="popup">
                             <i class="fas fa-facebook-square padding-small"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://plus.google.com/share?url=/functors-to-the-rescue.html" title="Share via Google+" target="popup">
+                        <a href="https://plus.google.com/share?url=./functors-to-the-rescue.html" title="Share via Google+" target="popup">
                             <i class="fas fa-google-plus padding-small"></i>
                         </a>
                     </li>
@@ -93,13 +91,13 @@
         <div id="sidebar-wrapper" class="twitchy-background">
             <ul id="accordion" class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="/">
+                    <a href="./">
                             <span class="fas fa-home padding-small"></span>
                             Snowboarding Coder
                     </a>
                 </li>
                     <li>
-                        <a href="/archives.html">
+                        <a href="./archives.html">
                             <span class="fas fa-th-list padding-small"></span>
                             Recent Articles
                         </a>
@@ -113,13 +111,13 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-share" class="sidebar_submenu collapse ">
                     <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=/functors-to-the-rescue.html" target="popup">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=./functors-to-the-rescue.html" target="popup">
                             <i class="fab fa-facebook-square padding-small"></i>
                             Facebook
                         </a>
                     </li>
                     <li>
-                        <a href="https://plus.google.com/share?url=/functors-to-the-rescue.html" target="popup">
+                        <a href="https://plus.google.com/share?url=./functors-to-the-rescue.html" target="popup">
                             <i class="fab fa-google-plus-square padding-small"></i>
                             Google+
                         </a>
@@ -162,7 +160,7 @@
                 </li>
                 <li class="panel anti-panel"><ul id="collapse-pages" class="sidebar_submenu collapse ">
                     <li>
-                        <a href="/pages/about.html">
+                        <a href="./pages/about.html">
                             <i class="fas fa-file-alt padding-small"></i>
                             About
                         </a>
@@ -187,7 +185,7 @@
             <div class="col-lg-9">
                 <header class="page-header">
                     <h1>
-                        <a href="/functors-to-the-rescue.html"
+                        <a href="./functors-to-the-rescue.html"
                            rel="bookmark"
                            title="Permalink to Functors to the Rescue!">
                             Functors to the Rescue!
@@ -200,7 +198,7 @@
                 <i class="fa fa-calendar padding-small"></i><time datetime="2018-03-26T00:00:00-06:00"> Mon 26 March 2018</time>
             </span>
             <span class="category">
-                <i class="fa fa-folder-open padding-small"></i><a href="/category/posts.html">Posts</a>
+                <i class="fa fa-folder-open padding-small"></i><a href="./category/posts.html">Posts</a>
             </span>
         </small>
     </div>
@@ -215,40 +213,38 @@
                     <p>I've recently had the singular pleasure of working with some legacy code written by a team I (thankfully) no longer work with directly. This team had several issues, one of which I'll address in a later post, one I'll discuss today.</p>
 <p>Today's issue is that the team was very enamored of new technology, but not overly concerned with readability. This combination produces some quite interesting code. One of the anti-patterns that I see frequently in their code is the use of functors in situations where they only serve to obfuscate the code.</p>
 <p>In the example I found, they had a map and wanted to search for a key given a known value. Here's the code the produced:</p>
-<div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">PresetMap</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PresetMap</span><span class="p">;</span>
 
-<span class="k">struct</span> <span class="nc">CompareString</span> <span class="p">{</span>
-    <span class="n">CompareString</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span> <span class="o">:</span> <span class="n">_str</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">}</span>
-    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()</span> <span class="p">(</span><span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">ptz</span> <span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">_str</span> <span class="o">==</span> <span class="n">ptz</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">CompareString</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">CompareString</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">_str</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">ptz</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">_str</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ptz</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="k">private</span><span class="o">:</span>
-    <span class="n">string</span> <span class="n">_str</span><span class="p">;</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">_str</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">string</span> <span class="nf">getPreset</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">preset</span><span class="p">,</span> <span class="n">PresetMap</span><span class="o">&amp;</span> <span class="n">myMap</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">PresetMap</span><span class="o">::</span><span class="n">iterator</span> <span class="n">it</span> <span class="o">=</span> <span class="n">find_if</span><span class="p">(</span><span class="n">myMap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">CompareString</span><span class="p">(</span><span class="n">preset</span><span class="p">));</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="n">string</span><span class="w"> </span><span class="nf">getPreset</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">preset</span><span class="p">,</span><span class="w"> </span><span class="n">PresetMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">myMap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PresetMap</span><span class="o">::</span><span class="n">iterator</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find_if</span><span class="p">(</span><span class="n">myMap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">CompareString</span><span class="p">(</span><span class="n">preset</span><span class="p">));</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>One might argue that it's quite reasonable to use a functor in this case if there are other places where that functor is re-used. Alas, this was not the case. This was the sole use of that functor. I haven't verified, but I'd strongly suspect that there are multiple instances of very similar functors scattered throughout the code base, all used exactly once.</p>
 <p>For the record, I spent a few minutes rewriting this into what <em>I</em> view as a 'sane' approach:</p>
-<div class="highlight"><pre><span></span><span class="n">string</span> <span class="nf">newGetPreset</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">presetName</span><span class="p">,</span> <span class="n">PresetMap</span><span class="o">&amp;</span> <span class="n">myMap</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">preset</span> <span class="p">:</span> <span class="n">myMap</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">preset</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="n">presetName</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="n">preset</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">string</span><span class="w"> </span><span class="nf">newGetPreset</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">presetName</span><span class="p">,</span><span class="w"> </span><span class="n">PresetMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">myMap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">preset</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">myMap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">preset</span><span class="p">.</span><span class="n">second</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">presetName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">preset</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>While there's an argument to be made that reusing the search algorithm from the stdlib is a higher good, I'd counter that readability is much, much more important, especially for such a trivial use case.</p>
 <p>Spreading a simple search across 17 lines when a simple 8 line function will do seems a little extravagant.</p>
@@ -257,18 +253,17 @@
 <p>What do you think of this code? Am I completely missing the mark?</p>
 <h2>Update</h2>
 <p>A different former-coworker read this and pointed out that I missed the ball by not including C++'s <code>lambda</code> functionality for this problem.  I've used lambdas in other languages, but my C++ was always limited to pre-C++11 before this, so the syntax was new to me.  Here's what the same function looks like with a lambda:</p>
-<div class="highlight"><pre><span></span><span class="n">string</span> <span class="nf">lambdaGetPreset</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">preset</span><span class="p">,</span> <span class="n">PresetMap</span><span class="o">&amp;</span> <span class="n">myMap</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">find_if</span><span class="p">(</span><span class="n">myMap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
-            <span class="p">[</span><span class="n">preset</span><span class="p">]</span> <span class="p">(</span><span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">ptz</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="n">preset</span> <span class="o">==</span> <span class="n">ptz</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
-            <span class="p">});</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">string</span><span class="w"> </span><span class="nf">lambdaGetPreset</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">preset</span><span class="p">,</span><span class="w"> </span><span class="n">PresetMap</span><span class="o">&amp;</span><span class="w"> </span><span class="n">myMap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find_if</span><span class="p">(</span><span class="n">myMap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+<span class="w">            </span><span class="p">[</span><span class="n">preset</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">ptz</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">preset</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ptz</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">myMap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>I'll admit it still looks a bit odd to me, but that's mainly due to the lambda syntax being new.  I suspect once I get used to it, this will seem more reasonable to me.  I certainly wouldn't be thinking about changing it to make it more readable as I was with the original.</p>
 <p>Thanks to Erik for pointing out lambdas!</p>
@@ -299,11 +294,11 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery Version 1.11.2 -->
-    <script src="/theme/js/jquery-1.11.2.min.js"></script>
+    <script src="./theme/js/jquery-1.11.2.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="/theme/js/bootstrap.min.js"></script>
+    <script src="./theme/js/bootstrap.min.js"></script>
     <!-- twitchy Script -->
-    <script src="/theme/js/pelican_twitchy.min.js"></script>
+    <script src="./theme/js/pelican_twitchy.min.js"></script>
 
 </body>
 </html>
