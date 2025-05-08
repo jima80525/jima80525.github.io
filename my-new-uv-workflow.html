@@ -225,124 +225,121 @@
 <p>From there you can add the code snippet below to your <code>.bashrc</code> file (or however you like to have these things) and source that file.</p>
 <p>In his article, Trey also goes into detail about using <code>starship</code> which I also use, but I feel that, while that's pretty cool, it's not completely necessary to getting this workflow running.</p>
 <p>If you're interested in making your prompt look cool with python venv and version info, I'd recommand starship and Trey's article referenced above.</p>
-<p>Without further ado, here's the code, which can also be found <a href="https://github.com/jima80525/bin/blob/ae2dee4a786dd264b07092021ef2092dfec3c198/bashrc_to_copy_to_home_dir#L91">here</a></p>
-<p>```bash</p>
-<h1>direnv functions to give venv and workon commands from:</h1>
-<h1>https://treyhunner.com/2024/10/switching-from-virtualenvwrapper-to-direnv-starship-and-uv/</h1>
-<p>venv() {
-    local venv_name
-    local projects_file="$HOME/.projects"
-    local dir_name=$(basename "$PWD")</p>
-<div class="highlight"><pre><span></span><code><span class="cp"># If there are no arguments or the last argument starts with a dash, use dir_name</span>
-<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">$</span><span class="err">#</span><span class="w"> </span><span class="o">-</span><span class="n">eq</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[[</span><span class="w"> </span><span class="s">&quot;${!#}&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-*</span><span class="w"> </span><span class="p">]];</span><span class="w"> </span><span class="n">then</span>
-<span class="w">    </span><span class="n">venv_name</span><span class="o">=</span><span class="s">&quot;$dir_name&quot;</span>
-<span class="k">else</span>
-<span class="w">    </span><span class="n">venv_name</span><span class="o">=</span><span class="s">&quot;${!#}&quot;</span>
-<span class="w">    </span><span class="n">set</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="s">&quot;${@:1:$#-1}&quot;</span>
-<span class="n">fi</span>
+<p>Without further ado, here's the code, which can also be found <a href="https://github.com/jima80525/bin/blob/ae2dee4a786dd264b07092021ef2092dfec3c198/bashrc_to_copy_to_home_dir#L91">here</a>:</p>
+<div class="highlight"><pre><span></span><code>venv<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>venv_name
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">projects_file</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.projects&quot;</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">dir_name</span><span class="o">=</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span><span class="k">)</span>
 
-<span class="cp"># Check if .envrc already exists</span>
-<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="p">.</span><span class="n">envrc</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
-<span class="w">    </span><span class="n">echo</span><span class="w"> </span><span class="s">&quot;Error: .envrc already exists&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="mi">2</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span>
-<span class="n">fi</span>
+<span class="w">    </span><span class="c1"># If there are no arguments or the last argument starts with a dash, use dir_name</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="p">!#</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>-*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nv">venv_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$dir_name</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nv">venv_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="p">!#</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nb">set</span><span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="p">@:</span><span class="nv">1</span><span class="p">:</span><span class="nv">$#</span><span class="p">-1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="k">fi</span>
 
-<span class="k">if</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="o">-</span><span class="n">Fq</span><span class="w"> </span><span class="n">$</span><span class="p">{</span><span class="n">venv_name</span><span class="p">}</span><span class="w"> </span><span class="n">$</span><span class="p">{</span><span class="n">projects_file</span><span class="p">};</span><span class="w"> </span><span class="n">then</span>
-<span class="w">    </span><span class="n">echo</span><span class="w"> </span><span class="s">&quot;Error: a project named ${venv_name} already exists&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="mi">2</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span>
-<span class="n">fi</span>
+<span class="w">    </span><span class="c1"># Check if .envrc already exists</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>.envrc<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: .envrc already exists&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="k">fi</span>
 
-<span class="cp"># Create venv</span>
-<span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="n">venv</span><span class="w"> </span><span class="o">--</span><span class="n">seed</span><span class="w"> </span><span class="o">--</span><span class="n">prompt</span><span class="w"> </span><span class="s">&quot;$venv_name&quot;</span><span class="w"> </span><span class="s">&quot;$@&quot;</span><span class="w"> </span><span class="p">.</span><span class="n">venv</span><span class="p">;</span><span class="w"> </span><span class="n">then</span>
-<span class="w">    </span><span class="n">echo</span><span class="w"> </span><span class="s">&quot;Error: Failed to create venv&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="mi">2</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span>
-<span class="n">fi</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-Fq<span class="w"> </span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">projects_file</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: a project named </span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2"> already exists&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="k">fi</span>
 
-<span class="n">source</span><span class="w"> </span><span class="p">.</span><span class="n">venv</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="w">    </span><span class="c1"># Create venv</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>uv<span class="w"> </span>venv<span class="w"> </span>--seed<span class="w"> </span>--prompt<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$venv_name</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>.venv<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Failed to create venv&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="k">fi</span>
 
-<span class="cp"># Create .envrc</span>
-<span class="n">echo</span><span class="w"> </span><span class="s">&quot;layout python&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">envrc</span>
+<span class="w">    </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 
-<span class="cp"># Append project name and directory to projects file</span>
-<span class="n">echo</span><span class="w"> </span><span class="s">&quot;${venv_name} = ${PWD}&quot;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">$projects_file</span>
+<span class="w">    </span><span class="c1"># Create .envrc</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;layout python&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>.envrc
 
-<span class="cp"># Allow direnv to immediately activate the virtual environment</span>
-<span class="n">direnv</span><span class="w"> </span><span class="n">allow</span>
+<span class="w">    </span><span class="c1"># Append project name and directory to projects file</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2"> = </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$projects_file</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
-<span class="w">    </span><span class="cp"># Install requirements if requirements.txt exists</span>
-<span class="w">    </span><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
-<span class="n">fi</span>
+<span class="w">    </span><span class="c1"># Allow direnv to immediately activate the virtual environment</span>
+<span class="w">    </span>direnv<span class="w"> </span>allow
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="c1"># Install requirements if requirements.txt exists</span>
+<span class="w">        </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="o">}</span>
+
+workon<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">project_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">projects_file</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.projects&quot;</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>project_dir
+<span class="w">    </span><span class="c1"># Check for projects config file</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$projects_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: </span><span class="nv">$projects_file</span><span class="s2"> not found&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="c1"># Get the project directory for the given project name</span>
+<span class="w">    </span><span class="nv">project_dir</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;^</span><span class="nv">$project_name</span><span class="s2">\s*=&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$projects_file</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/^[^=]*=\s*//&#39;</span><span class="k">)</span>
+
+<span class="w">    </span><span class="c1"># Ensure a project directory was found</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$project_dir</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Project &#39;</span><span class="nv">$project_name</span><span class="s2">&#39; not found in </span><span class="nv">$projects_file</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="c1"># Ensure the project directory exists</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$project_dir</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Directory </span><span class="nv">$project_dir</span><span class="s2"> does not exist&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="c1"># Change directories</span>
+<span class="w">    </span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$project_dir</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+rmvenv<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="c1"># Remove a virtual environment</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span>venv_name
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">projects_file</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.projects&quot;</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">dir_name</span><span class="o">=</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span><span class="k">)</span>
+
+<span class="w">    </span><span class="c1"># If there are no arguments or the last argument starts with a dash, use dir_name</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="p">!#</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>-*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nv">venv_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$dir_name</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nv">venv_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="p">!#</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nb">set</span><span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="p">@:</span><span class="nv">1</span><span class="p">:</span><span class="nv">$#</span><span class="p">-1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span>workon<span class="w"> </span><span class="nv">$venv_name</span>
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="c1"># Check if .envrc already exists</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>.envrc<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Removing .envrc&quot;</span>
+<span class="w">        </span>rm<span class="w"> </span>.envrc
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span>.venv<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Removing .venv&quot;</span>
+<span class="w">        </span>rm<span class="w"> </span>-rf<span class="w"> </span>.venv
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span>.direnv<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Removing .direnv&quot;</span>
+<span class="w">        </span>rm<span class="w"> </span>-rf<span class="w"> </span>.direnv
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-Fq<span class="w"> </span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">projects_file</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Removing </span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2"> from </span><span class="si">${</span><span class="nv">projects_file</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;/^</span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2">/d&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">projects_file</span><span class="si">}</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="o">}</span>
 </code></pre></div>
-
-<p>}</p>
-<p>workon() {
-    local project_name="$1"
-    local projects_file="$HOME/.projects"
-    local project_dir
-    # Check for projects config file
-    if [[ ! -f "$projects_file" ]]; then
-        echo "Error: $projects_file not found" &gt;&amp;2
-        return 1
-    fi</p>
-<div class="highlight"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nt">Get</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">directory</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">given</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">name</span>
-<span class="nt">project_dir</span><span class="o">=$(</span><span class="nt">grep</span><span class="w"> </span><span class="nt">-E</span><span class="w"> </span><span class="s2">&quot;^$project_name\s*=&quot;</span><span class="w"> </span><span class="s2">&quot;$projects_file&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nt">sed</span><span class="w"> </span><span class="s1">&#39;s/^</span><span class="cp">[</span><span class="p">^</span><span class="o">=</span><span class="cp">]</span><span class="s1">*=\s*//&#39;</span><span class="o">)</span>
-
-<span class="err">#</span><span class="w"> </span><span class="nt">Ensure</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">directory</span><span class="w"> </span><span class="nt">was</span><span class="w"> </span><span class="nt">found</span>
-<span class="nt">if</span><span class="w"> </span><span class="cp">[</span><span class="err">[</span><span class="w"> </span><span class="na">-z</span><span class="w"> </span><span class="s2">&quot;$project_dir&quot;</span><span class="w"> </span><span class="cp">]</span><span class="o">];</span><span class="w"> </span><span class="nt">then</span>
-<span class="w">    </span><span class="nt">echo</span><span class="w"> </span><span class="s2">&quot;Error: Project &#39;$project_name&#39; not found in $projects_file&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="nt">2</span>
-<span class="w">    </span><span class="nt">return</span><span class="w"> </span><span class="nt">1</span>
-<span class="nt">fi</span>
-
-<span class="err">#</span><span class="w"> </span><span class="nt">Ensure</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">project</span><span class="w"> </span><span class="nt">directory</span><span class="w"> </span><span class="nt">exists</span>
-<span class="nt">if</span><span class="w"> </span><span class="cp">[</span><span class="err">[</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="na">-d</span><span class="w"> </span><span class="s2">&quot;$project_dir&quot;</span><span class="w"> </span><span class="cp">]</span><span class="o">];</span><span class="w"> </span><span class="nt">then</span>
-<span class="w">    </span><span class="nt">echo</span><span class="w"> </span><span class="s2">&quot;Error: Directory $project_dir does not exist&quot;</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="nt">2</span>
-<span class="w">    </span><span class="nt">return</span><span class="w"> </span><span class="nt">1</span>
-<span class="nt">fi</span>
-
-<span class="err">#</span><span class="w"> </span><span class="nt">Change</span><span class="w"> </span><span class="nt">directories</span>
-<span class="nt">cd</span><span class="w"> </span><span class="s2">&quot;$project_dir&quot;</span>
-</code></pre></div>
-
-<p>}</p>
-<p>rmvenv() {
-    # Remove a virtual environment
-    local venv_name
-    local projects_file="$HOME/.projects"
-    local dir_name=$(basename "$PWD")</p>
-<div class="highlight"><pre><span></span><code>#<span class="w"> </span>If<span class="w"> </span>there<span class="w"> </span>are<span class="w"> </span>no<span class="w"> </span>arguments<span class="w"> </span>or<span class="w"> </span>the<span class="w"> </span>last<span class="w"> </span>argument<span class="w"> </span>starts<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>dash,<span class="w"> </span>use<span class="w"> </span>dir_name
-if<span class="w"> </span>[<span class="w"> </span>$#<span class="w"> </span>-eq<span class="w"> </span>0<span class="w"> </span>]<span class="w"> </span>||<span class="w"> </span>[[<span class="w"> </span>&quot;<span class="cp">${</span><span class="err">!</span><span class="c1">#</span><span class="cp">}</span>&quot;<span class="w"> </span>==<span class="w"> </span>-*<span class="w"> </span>]];<span class="w"> </span>then
-<span class="w">    </span>venv_name=&quot;<span class="nv">$dir_name</span>&quot;
-else
-<span class="w">    </span>venv_name=&quot;<span class="cp">${</span><span class="err">!</span><span class="c1">#</span><span class="cp">}</span>&quot;
-<span class="w">    </span>set<span class="w"> </span>--<span class="w"> </span>&quot;<span class="cp">${</span><span class="o">@</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="err">$</span><span class="c1">#-1</span><span class="cp">}</span>&quot;
-<span class="w">    </span>workon<span class="w"> </span><span class="nv">$venv_name</span>
-fi
-
-#<span class="w"> </span>Check<span class="w"> </span>if<span class="w"> </span>.envrc<span class="w"> </span>already<span class="w"> </span>exists
-if<span class="w"> </span>[<span class="w"> </span>-f<span class="w"> </span>.envrc<span class="w"> </span>];<span class="w"> </span>then
-<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span>.envrc&quot;
-<span class="w">    </span>rm<span class="w"> </span>.envrc
-fi
-
-if<span class="w"> </span>[<span class="w"> </span>-d<span class="w"> </span>.venv<span class="w"> </span>];<span class="w"> </span>then
-<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span>.venv&quot;
-<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>.venv
-fi
-
-if<span class="w"> </span>[<span class="w"> </span>-d<span class="w"> </span>.direnv<span class="w"> </span>];<span class="w"> </span>then
-<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span>.direnv&quot;
-<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>.direnv
-fi
-
-if<span class="w"> </span>grep<span class="w"> </span>-Fq<span class="w"> </span><span class="cp">${</span><span class="n">venv_name</span><span class="cp">}</span><span class="w"> </span><span class="cp">${</span><span class="n">projects_file</span><span class="cp">}</span>;<span class="w"> </span>then
-<span class="w">    </span>echo<span class="w"> </span>&quot;Removing<span class="w"> </span><span class="cp">${</span><span class="n">venv_name</span><span class="cp">}</span><span class="w"> </span>from<span class="w"> </span><span class="cp">${</span><span class="n">projects_file</span><span class="cp">}</span>&quot;
-<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span>&quot;/^<span class="cp">${</span><span class="n">venv_name</span><span class="cp">}</span>/d&quot;<span class="w"> </span><span class="cp">${</span><span class="n">projects_file</span><span class="cp">}</span>
-fi
-</code></pre></div>
-
-<p>}
-```</p>
                 </div>
                 <footer class="text-right">
                     <p>- Jim Anderson</p>
