@@ -44,7 +44,8 @@ RELATIVE_URLS = True
 
 THEME = 'pelican-twitchy'
 PYGMENTS_STYLE = "xcode"
-BOOTSTRAP_THEME = 'darkly'
+# BOOTSTRAP_THEME = 'darkly'
+BOOTSTRAP_THEME = 'cyborg'
 EXPAND_LATEST_ON_INDEX = True
 SHARE = True
 SOCIAL = (('Twitter', 'https://twitter.com/jimande75053775'), ('GitHub', 'https://github.com/jima80525'))
