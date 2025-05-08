@@ -34,7 +34,7 @@ If you're interested in making your prompt look cool with python venv and versio
 Without further ado, here's the code, which can also be found [here](https://github.com/jima80525/bin/blob/ae2dee4a786dd264b07092021ef2092dfec3c198/bashrc_to_copy_to_home_dir#L91):
 
 
-    :::bash
+    :::
     venv() {
         local venv_name
         local projects_file="$HOME/.projects"
