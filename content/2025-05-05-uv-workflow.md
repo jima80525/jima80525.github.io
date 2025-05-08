@@ -31,122 +31,120 @@ In his article, Trey also goes into detail about using `starship` which I also u
 
 If you're interested in making your prompt look cool with python venv and version info, I'd recommand starship and Trey's article referenced above.
 
-Without further ado, here's the code, which can also be found [here](https://github.com/jima80525/bin/blob/ae2dee4a786dd264b07092021ef2092dfec3c198/bashrc_to_copy_to_home_dir#L91)
+Without further ado, here's the code, which can also be found [here](https://github.com/jima80525/bin/blob/ae2dee4a786dd264b07092021ef2092dfec3c198/bashrc_to_copy_to_home_dir#L91):
 
-```bash
-# direnv functions to give venv and workon commands from:
-# https://treyhunner.com/2024/10/switching-from-virtualenvwrapper-to-direnv-starship-and-uv/
-venv() {
-    local venv_name
-    local projects_file="$HOME/.projects"
-    local dir_name=$(basename "$PWD")
 
-    # If there are no arguments or the last argument starts with a dash, use dir_name
-    if [ $# -eq 0 ] || [[ "${!#}" == -* ]]; then
-        venv_name="$dir_name"
-    else
-        venv_name="${!#}"
-        set -- "${@:1:$#-1}"
-    fi
+    :::bash
+    venv() {
+        local venv_name
+        local projects_file="$HOME/.projects"
+        local dir_name=$(basename "$PWD")
 
-    # Check if .envrc already exists
-    if [ -f .envrc ]; then
-        echo "Error: .envrc already exists" >&2
-        return 1
-    fi
+        # If there are no arguments or the last argument starts with a dash, use dir_name
+        if [ $# -eq 0 ] || [[ "${!#}" == -* ]]; then
+            venv_name="$dir_name"
+        else
+            venv_name="${!#}"
+            set -- "${@:1:$#-1}"
+        fi
 
-    if grep -Fq ${venv_name} ${projects_file}; then
-        echo "Error: a project named ${venv_name} already exists" >&2
-        return 1
-    fi
+        # Check if .envrc already exists
+        if [ -f .envrc ]; then
+            echo "Error: .envrc already exists" >&2
+            return 1
+        fi
 
-    # Create venv
-    if ! uv venv --seed --prompt "$venv_name" "$@" .venv; then
-        echo "Error: Failed to create venv" >&2
-        return 1
-    fi
+        if grep -Fq ${venv_name} ${projects_file}; then
+            echo "Error: a project named ${venv_name} already exists" >&2
+            return 1
+        fi
 
-    source .venv/bin/activate
+        # Create venv
+        if ! uv venv --seed --prompt "$venv_name" "$@" .venv; then
+            echo "Error: Failed to create venv" >&2
+            return 1
+        fi
 
-    # Create .envrc
-    echo "layout python" > .envrc
+        source .venv/bin/activate
 
-    # Append project name and directory to projects file
-    echo "${venv_name} = ${PWD}" >> $projects_file
+        # Create .envrc
+        echo "layout python" > .envrc
 
-    # Allow direnv to immediately activate the virtual environment
-    direnv allow
+        # Append project name and directory to projects file
+        echo "${venv_name} = ${PWD}" >> $projects_file
 
-    if [ -f requirements.txt ]; then
-        # Install requirements if requirements.txt exists
-        pip install -r requirements.txt
-    fi
+        # Allow direnv to immediately activate the virtual environment
+        direnv allow
 
-}
+        if [ -f requirements.txt ]; then
+            # Install requirements if requirements.txt exists
+            pip install -r requirements.txt
+        fi
 
-workon() {
-    local project_name="$1"
-    local projects_file="$HOME/.projects"
-    local project_dir
-    # Check for projects config file
-    if [[ ! -f "$projects_file" ]]; then
-        echo "Error: $projects_file not found" >&2
-        return 1
-    fi
+    }
 
-    # Get the project directory for the given project name
-    project_dir=$(grep -E "^$project_name\s*=" "$projects_file" | sed 's/^[^=]*=\s*//')
+    workon() {
+        local project_name="$1"
+        local projects_file="$HOME/.projects"
+        local project_dir
+        # Check for projects config file
+        if [[ ! -f "$projects_file" ]]; then
+            echo "Error: $projects_file not found" >&2
+            return 1
+        fi
 
-    # Ensure a project directory was found
-    if [[ -z "$project_dir" ]]; then
-        echo "Error: Project '$project_name' not found in $projects_file" >&2
-        return 1
-    fi
+        # Get the project directory for the given project name
+        project_dir=$(grep -E "^$project_name\s*=" "$projects_file" | sed 's/^[^=]*=\s*//')
 
-    # Ensure the project directory exists
-    if [[ ! -d "$project_dir" ]]; then
-        echo "Error: Directory $project_dir does not exist" >&2
-        return 1
-    fi
+        # Ensure a project directory was found
+        if [[ -z "$project_dir" ]]; then
+            echo "Error: Project '$project_name' not found in $projects_file" >&2
+            return 1
+        fi
 
-    # Change directories
-    cd "$project_dir"
-}
+        # Ensure the project directory exists
+        if [[ ! -d "$project_dir" ]]; then
+            echo "Error: Directory $project_dir does not exist" >&2
+            return 1
+        fi
 
-rmvenv() {
-    # Remove a virtual environment
-    local venv_name
-    local projects_file="$HOME/.projects"
-    local dir_name=$(basename "$PWD")
+        # Change directories
+        cd "$project_dir"
+    }
 
-    # If there are no arguments or the last argument starts with a dash, use dir_name
-    if [ $# -eq 0 ] || [[ "${!#}" == -* ]]; then
-        venv_name="$dir_name"
-    else
-        venv_name="${!#}"
-        set -- "${@:1:$#-1}"
-        workon $venv_name
-    fi
+    rmvenv() {
+        # Remove a virtual environment
+        local venv_name
+        local projects_file="$HOME/.projects"
+        local dir_name=$(basename "$PWD")
 
-    # Check if .envrc already exists
-    if [ -f .envrc ]; then
-        echo "Removing .envrc"
-        rm .envrc
-    fi
+        # If there are no arguments or the last argument starts with a dash, use dir_name
+        if [ $# -eq 0 ] || [[ "${!#}" == -* ]]; then
+            venv_name="$dir_name"
+        else
+            venv_name="${!#}"
+            set -- "${@:1:$#-1}"
+            workon $venv_name
+        fi
 
-    if [ -d .venv ]; then
-        echo "Removing .venv"
-        rm -rf .venv
-    fi
+        # Check if .envrc already exists
+        if [ -f .envrc ]; then
+            echo "Removing .envrc"
+            rm .envrc
+        fi
 
-    if [ -d .direnv ]; then
-        echo "Removing .direnv"
-        rm -rf .direnv
-    fi
+        if [ -d .venv ]; then
+            echo "Removing .venv"
+            rm -rf .venv
+        fi
 
-    if grep -Fq ${venv_name} ${projects_file}; then
-        echo "Removing ${venv_name} from ${projects_file}"
-        sed -i "/^${venv_name}/d" ${projects_file}
-    fi
-}
-```
+        if [ -d .direnv ]; then
+            echo "Removing .direnv"
+            rm -rf .direnv
+        fi
+
+        if grep -Fq ${venv_name} ${projects_file}; then
+            echo "Removing ${venv_name} from ${projects_file}"
+            sed -i "/^${venv_name}/d" ${projects_file}
+        fi
+    }
