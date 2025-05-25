@@ -134,6 +134,7 @@ Here's the `.bashrc` code:
 
         # Create .envrc
         echo "layout python" > .envrc
+        echo "unset PS1" >> .envrc
 
         # Append project name and directory to projects file
         echo "${venv_name} = ${PWD}" >> $projects_file
