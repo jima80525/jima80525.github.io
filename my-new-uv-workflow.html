@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Jim Anderson" />
-        <meta name="description" content="I&#39;ve recently changed my python project workflow based on a great write-up by Trey Hunner. Trey did a great job of explaining the details of what uv is and why you might want to use it, and also set up some scripts for zsh to recreate a workflow that is …" />
+        <meta name="description" content="I&#39;ve recently changed my python project workflow based on a great write-up by Trey Hunner. The workflow makes setting up and using virtual environments for several projects fast and easy. It is also useful if you&#39;ve only got a single, main project you&#39;re developing, as it allows you to get …" />
 
 
     <title>My New `uv` Workflow - Snowboarding Coder</title>
@@ -210,22 +210,71 @@
         <div class="row">
             <div class="col-lg-9">
                 <div class="entry-content">
-                    <p>I've recently changed my python project workflow based on a great write-up by <a href="https://treyhunner.com/2024/10/switching-from-virtualenvwrapper-to-direnv-starship-and-uv/">Trey Hunner</a>.</p>
-<p>Trey did a great job of explaining the details of what <code>uv</code> is and why you might want to use it, and also set up some scripts for zsh to recreate a workflow that is quite similar to what I've been using for several years.</p>
-<p>I have shamelessly copied his work, ported it to bash ('cause I'm old-school) and expanded it a bit.</p>
+                    <p>I've recently changed my python project workflow based on a great write-up by <a href="https://treyhunner.com/2024/10/switching-from-virtualenvwrapper-to-direnv-starship-and-uv/">Trey Hunner</a>. The workflow makes setting up and using virtual environments for several projects fast and easy. It is also useful if you've only got a single, main project you're developing, as it allows you to get to the project, activate the virtualenv, and be ready to work, all with a single command.</p>
+<p>Trey did a great job of explaining the details of what <code>uv</code> is and why you might want to use it, so I won't go into too much detail here, other than to point out the <code>uv</code> is remarkably fast. It's enough faster that, like rust, it changes how you use the tool by allowing you to run it frequently without noticeable time added to your work.</p>
+<p>Trey started with a workflow that was similar to what I was using (virtualenvwrapper+pyenv) and ported it over to use <code>direnv</code> and <code>uv</code>.  I have shamelessly copied his work, ported it to bash ('cause I'm old-school) and expanded it a bit.  Let's walk through how I use it.</p>
 <h2>The Workflow</h2>
 <p>Before going into the details of how to set up this system, I'll walk you through what it looks like in operation. There are three commands, one used when creating a new project, one used in normal, day-to-day operations, and one primarily for debugging things.</p>
-<p>To set up a new project in this workflow, you first need to <code>cd</code> to the project's directory. It doesn't matter if it already exists, usually for me it does, but it can be an empty directory, too.</p>
-<p>Once you're in the project directory, you then use the <code>venv</code> command (which is shown below in a custom bash script) to create the virtual environment, set up <code>direnv</code> to use this directory, and install the <code>requirement.txt</code> file if it's present.</p>
-<p>The <code>venv</code> script also does a little bookkeeping in the background to help with the second command, the day-to-day one, <code>workon</code>.</p>
-<p>To use the <code>workon</code> command (again, shown in the next section), you simply type <code>workon</code> followed by the name of the project. The command will change to you to project's directory and activate the virtualenvironment for you.</p>
-<p>Finally, for completeness (and to help me debug things while setting this up), there is the <code>rmvenv</code> which attempts to remove all traces left by the <code>venv</code> command.</p>
+<h3>Setting Up a Brand-New Project</h3>
+<p>To set up a new project in this workflow, it's easiest to create an empty directory, change into that directory, and then run the <code>venv</code> command:</p>
+<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>mkdir<span class="w"> </span>my_new_project
+&gt;<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>my_new_project
+&gt;<span class="w"> </span>venv
+</code></pre></div>
+
+<p>The <code>venv</code> command will create a virtual environt for you and configure <code>direnv</code> to automatically activate this virtual environment when you change to this directory.  It also adds a mapping from this project name to this directory which will enable the <code>workon</code> command, described below.</p>
+<p>There are a few options you can use for the venv command. You can use something other than the directory name for your project name:</p>
+<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>venv<span class="w"> </span>this_name_is_better
+</code></pre></div>
+
+<p>You can specify which version of python you want:</p>
+<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>venv<span class="w"> </span>--python<span class="o">=</span><span class="m">3</span>.11
+</code></pre></div>
+
+<p>If you don't currently have that version of python installed, <code>uv</code> will auto-install it for you and then use it for the venv. </p>
+<p><strong>NOTE:</strong> Due to my lack of bash-magic, you <em>must</em> have the <code>=</code> in this option.  I hope to fix this at some point, but that may be by rewriting the tool in Python. </p>
+<p>You can use any of the options available to <a href="https://docs.astral.sh/uv/reference/cli/#uv-venv"><code>uv venv</code></a>.</p>
+<p>If you want to use options <strong>and</strong> use an non-default project name, the project name <strong>must</strong> come at the end. Again, this is due to lack of bash-ability on my part. </p>
+<h3>Setting up an Existing Project</h3>
+<p>If, instead of a brand new project, you want to use this on an existing project, say one you're going to clone from github, the process looks pretty much the same:</p>
+<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>the_project
+&gt;<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>the_project
+&gt;<span class="w"> </span>venv
+</code></pre></div>
+
+<p>This does everything described above with the additional step of looking for a requirements.txt file and, if it exists, running <code>uv pip install -r requirements.txt</code>, thus setting you up to work immediately.</p>
+<h3>Working on a Project</h3>
+<p>Most of the time you're not setting up projects, you're just working on them. This is where the real benefit of this tooling  comes into play. </p>
+<p>When you open a new terminal, you are placed in your home directory, which is very likely not where your project lives (or at least it shouldn't be). This workflow has the <code>workon</code> command which uses a simple database to map project names to their directories. </p>
+<p>To start working on a project, you type:</p>
+<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>workon<span class="w"> </span>the_project
+</code></pre></div>
+
+<p>This will change you to that directory and, by the magic of direnv, activate the virtual environment automatically, so you're ready to work!</p>
+<p>Note that the setup below also includes tab comletion for <code>bash</code> which allows you to type <code>workon &lt;tab&gt;&lt;tab&gt;</code> to see a list of possible projects.</p>
+<p>You can switch projects at any time using the <code>workon</code> command. You do not need to deactivate the current venv or activate the new one, <code>direnv</code> takes care of all that for you.</p>
+<h3>Removing Projects</h3>
+<p>If you want to remove a project, you can use the <code>rmven &lt;project-name&gt;</code> command which removes the name from the database of projects and also remove the direnv and venv settings. You should do this from the project directory.</p>
+<p><strong>USE THIS COMMAND WITH CAUTION!</strong>  It has not been tested extensively.</p>
 <h2>The Setup</h2>
-<p>To get this workflow to operate, you will need to install <a href="https://docs.astral.sh/uv/getting-started/installation/"><code>uv</code></a> <strong>and</strong> <a href="https://direnv.net/docs/installation.html"><code>direnv</code></a>.</p>
-<p>From there you can add the code snippet below to your <code>.bashrc</code> file (or however you like to have these things) and source that file.</p>
-<p>In his article, Trey also goes into detail about using <code>starship</code> which I also use, but I feel that, while that's pretty cool, it's not completely necessary to getting this workflow running.</p>
-<p>If you're interested in making your prompt look cool with python venv and version info, I'd recommand starship and Trey's article referenced above.</p>
-<p>Without further ado, here's the code, which can also be found <a href="https://github.com/jima80525/bin/blob/ae2dee4a786dd264b07092021ef2092dfec3c198/bashrc_to_copy_to_home_dir#L91">here</a>:</p>
+<p>To get this workflow to operate, follow these steps:</p>
+<ul>
+<li>Install <a href="https://docs.astral.sh/uv/getting-started/installation/"><code>uv</code></a> <strong>and</strong> <a href="https://direnv.net/docs/installation.html"><code>direnv</code></a>.</li>
+<li>
+<p>Create a <code>~/.config/direnv/direnvrc</code> file with the following content:</p>
+<p>:::sh
+layout_python() {
+    VIRTUAL_ENV="$(pwd)/.venv"
+    PATH_add "$VIRTUAL_ENV/bin"
+    export VIRTUAL_ENV
+}</p>
+</li>
+<li>
+<p>Add the large code block below to your <code>~/.bashrc</code> file. </p>
+</li>
+</ul>
+<p>If you like a fancy prompt on your command line, I recommend <code>starship</code> which I also use. Trey does a good job of explaining it's configuration in the article referenced at the top.</p>
+<p>Here's the <code>.bashrc</code> code:</p>
 <div class="highlight"><pre><span></span><code>venv<span class="o">()</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span>venv_name
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">projects_file</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.projects&quot;</span>
@@ -245,13 +294,13 @@
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
 <span class="w">    </span><span class="k">fi</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-Fq<span class="w"> </span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">projects_file</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-Fq<span class="w"> </span><span class="s2">&quot;^</span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2"> &quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">projects_file</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: a project named </span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2"> already exists&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
 <span class="w">    </span><span class="k">fi</span>
 
 <span class="w">    </span><span class="c1"># Create venv</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>uv<span class="w"> </span>venv<span class="w"> </span>--seed<span class="w"> </span>--prompt<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$venv_name</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>.venv<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>uv<span class="w"> </span>venv<span class="w"> </span>--quiet<span class="w"> </span>--seed<span class="w"> </span>--prompt<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$venv_name</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>.venv<span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Failed to create venv&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
 <span class="w">    </span><span class="k">fi</span>
@@ -269,7 +318,7 @@
 
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="c1"># Install requirements if requirements.txt exists</span>
-<span class="w">        </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="w">        </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 <span class="w">    </span><span class="k">fi</span>
 
 <span class="o">}</span>
@@ -339,6 +388,31 @@ rmvenv<span class="o">()</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;/^</span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2">/d&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">projects_file</span><span class="si">}</span>
 <span class="w">    </span><span class="k">fi</span>
 <span class="o">}</span>
+
+_workon_completions<span class="o">()</span>
+<span class="o">{</span>
+<span class="w">  </span><span class="c1"># This little bit of nasty pulls the first word from each line of .projects</span>
+<span class="w">  </span><span class="nv">x</span><span class="o">=</span><span class="k">$(</span>awk<span class="w"> </span><span class="s1">&#39;{ print $1 }&#39;</span><span class="w"> </span>.projects<span class="w"> </span><span class="k">)</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">suggestions</span><span class="o">=(</span><span class="k">$(</span><span class="nb">compgen</span><span class="w"> </span>-W<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$x</span><span class="s2">&quot;</span><span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">COMP_WORDS</span><span class="p">[1]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="o">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${#</span><span class="nv">suggestions</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="c1"># if there&#39;s only one match, we remove the command literal</span>
+<span class="w">    </span><span class="c1"># to proceed with the automatic completion of the number</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">project</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">suggestions</span><span class="p">[0]/%</span><span class="se">\ </span><span class="p">*/</span><span class="si">}</span><span class="k">)</span>
+<span class="w">    </span><span class="nv">COMPREPLY</span><span class="o">=(</span><span class="s2">&quot;</span><span class="nv">$project</span><span class="s2">&quot;</span><span class="o">)</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="c1"># more than one suggestions resolved,</span>
+<span class="w">    </span><span class="c1"># respond with the suggestions intact</span>
+<span class="w">    </span><span class="nv">COMPREPLY</span><span class="o">=(</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">suggestions</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="m">0</span>
+<span class="o">}</span>
+
+<span class="c1"># complete -o nospace -F _workon_completions workon</span>
+<span class="nb">complete</span><span class="w"> </span>-F<span class="w"> </span>_workon_completions<span class="w"> </span>workon
+
+<span class="c1"># cuts down on the direnv chatter when running `workon`</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DIRENV_LOG_FORMAT</span><span class="o">=</span>
 </code></pre></div>
                 </div>
                 <footer class="text-right">
