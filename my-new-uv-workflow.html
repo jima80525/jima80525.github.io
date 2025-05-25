@@ -307,6 +307,7 @@
 
 <span class="w">    </span><span class="c1"># Create .envrc</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;layout python&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>.envrc
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;unset PS1&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.envrc
 
 <span class="w">    </span><span class="c1"># Append project name and directory to projects file</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">venv_name</span><span class="si">}</span><span class="s2"> = </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$projects_file</span>
