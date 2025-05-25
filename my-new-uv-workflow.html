@@ -231,10 +231,10 @@
 <div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>venv<span class="w"> </span>--python<span class="o">=</span><span class="m">3</span>.11
 </code></pre></div>
 
-<p>If you don't currently have that version of python installed, <code>uv</code> will auto-install it for you and then use it for the venv. </p>
-<p><strong>NOTE:</strong> Due to my lack of bash-magic, you <em>must</em> have the <code>=</code> in this option.  I hope to fix this at some point, but that may be by rewriting the tool in Python. </p>
+<p>If you don't currently have that version of python installed, <code>uv</code> will auto-install it for you and then use it for the venv.</p>
+<p><strong>NOTE:</strong> Due to my lack of bash-magic, you <em>must</em> have the <code>=</code> in this option.  I hope to fix this at some point, but that may be by rewriting the tool in Python.</p>
 <p>You can use any of the options available to <a href="https://docs.astral.sh/uv/reference/cli/#uv-venv"><code>uv venv</code></a>.</p>
-<p>If you want to use options <strong>and</strong> use an non-default project name, the project name <strong>must</strong> come at the end. Again, this is due to lack of bash-ability on my part. </p>
+<p>If you want to use options <strong>and</strong> use an non-default project name, the project name <strong>must</strong> come at the end. Again, this is due to lack of bash-ability on my part.</p>
 <h3>Setting up an Existing Project</h3>
 <p>If, instead of a brand new project, you want to use this on an existing project, say one you're going to clone from github, the process looks pretty much the same:</p>
 <div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>the_project
@@ -244,8 +244,8 @@
 
 <p>This does everything described above with the additional step of looking for a requirements.txt file and, if it exists, running <code>uv pip install -r requirements.txt</code>, thus setting you up to work immediately.</p>
 <h3>Working on a Project</h3>
-<p>Most of the time you're not setting up projects, you're just working on them. This is where the real benefit of this tooling  comes into play. </p>
-<p>When you open a new terminal, you are placed in your home directory, which is very likely not where your project lives (or at least it shouldn't be). This workflow has the <code>workon</code> command which uses a simple database to map project names to their directories. </p>
+<p>Most of the time you're not setting up projects, you're just working on them. This is where the real benefit of this tooling  comes into play.</p>
+<p>When you open a new terminal, you are placed in your home directory, which is very likely not where your project lives (or at least it shouldn't be). This workflow has the <code>workon</code> command which uses a simple database to map project names to their directories.</p>
 <p>To start working on a project, you type:</p>
 <div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>workon<span class="w"> </span>the_project
 </code></pre></div>
@@ -258,22 +258,20 @@
 <p><strong>USE THIS COMMAND WITH CAUTION!</strong>  It has not been tested extensively.</p>
 <h2>The Setup</h2>
 <p>To get this workflow to operate, follow these steps:</p>
-<ul>
+<ol>
 <li>Install <a href="https://docs.astral.sh/uv/getting-started/installation/"><code>uv</code></a> <strong>and</strong> <a href="https://direnv.net/docs/installation.html"><code>direnv</code></a>.</li>
-<li>
-<p>Create a <code>~/.config/direnv/direnvrc</code> file with the following content:</p>
-<p>:::sh
-layout_python() {
-    VIRTUAL_ENV="$(pwd)/.venv"
-    PATH_add "$VIRTUAL_ENV/bin"
-    export VIRTUAL_ENV
-}</p>
-</li>
-<li>
-<p>Add the large code block below to your <code>~/.bashrc</code> file. </p>
-</li>
-</ul>
+<li>Create a <code>~/.config/direnv/direnvrc</code> file with the following content shown below.  This tells <code>direnv</code> how you want it to deal with python programs and is referenced by the setup script we will create in the next step.</li>
+<li>Add the large code block below to your <code>~/.bashrc</code> file.</li>
+</ol>
 <p>If you like a fancy prompt on your command line, I recommend <code>starship</code> which I also use. Trey does a good job of explaining it's configuration in the article referenced at the top.</p>
+<p>Here is the contents of <code>~/.config/direnv/direnvrc</code>:</p>
+<div class="highlight"><pre><span></span><code>layout_python<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nv">VIRTUAL_ENV</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/.venv&quot;</span>
+<span class="w">    </span>PATH_add<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VIRTUAL_ENV</span><span class="s2">/bin&quot;</span>
+<span class="w">    </span><span class="nb">export</span><span class="w"> </span>VIRTUAL_ENV
+<span class="o">}</span>
+</code></pre></div>
+
 <p>Here's the <code>.bashrc</code> code:</p>
 <div class="highlight"><pre><span></span><code>venv<span class="o">()</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span>venv_name
