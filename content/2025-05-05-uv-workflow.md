@@ -33,13 +33,13 @@ You can specify which version of python you want:
     :::sh
     > venv --python=3.11
 
-If you don't currently have that version of python installed, `uv` will auto-install it for you and then use it for the venv. 
+If you don't currently have that version of python installed, `uv` will auto-install it for you and then use it for the venv.
 
-**NOTE:** Due to my lack of bash-magic, you *must* have the `=` in this option.  I hope to fix this at some point, but that may be by rewriting the tool in Python. 
+**NOTE:** Due to my lack of bash-magic, you *must* have the `=` in this option.  I hope to fix this at some point, but that may be by rewriting the tool in Python.
 
 You can use any of the options available to [`uv venv`](https://docs.astral.sh/uv/reference/cli/#uv-venv).
 
-If you want to use options **and** use an non-default project name, the project name **must** come at the end. Again, this is due to lack of bash-ability on my part. 
+If you want to use options **and** use an non-default project name, the project name **must** come at the end. Again, this is due to lack of bash-ability on my part.
 
 ### Setting up an Existing Project
 
@@ -54,9 +54,9 @@ This does everything described above with the additional step of looking for a r
 
 ### Working on a Project
 
-Most of the time you're not setting up projects, you're just working on them. This is where the real benefit of this tooling  comes into play. 
+Most of the time you're not setting up projects, you're just working on them. This is where the real benefit of this tooling  comes into play.
 
-When you open a new terminal, you are placed in your home directory, which is very likely not where your project lives (or at least it shouldn't be). This workflow has the `workon` command which uses a simple database to map project names to their directories. 
+When you open a new terminal, you are placed in your home directory, which is very likely not where your project lives (or at least it shouldn't be). This workflow has the `workon` command which uses a simple database to map project names to their directories.
 
 To start working on a project, you type:
 
@@ -79,9 +79,15 @@ If you want to remove a project, you can use the `rmven <project-name>` command 
 
 To get this workflow to operate, follow these steps:
 
-* Install [`uv`](https://docs.astral.sh/uv/getting-started/installation/) **and** [`direnv`](https://direnv.net/docs/installation.html).
-* Create a `~/.config/direnv/direnvrc` file with the following content:
-  
+1. Install [`uv`](https://docs.astral.sh/uv/getting-started/installation/) **and** [`direnv`](https://direnv.net/docs/installation.html).
+2. Create a `~/.config/direnv/direnvrc` file with the following content shown below.  This tells `direnv` how you want it to deal with python programs and is referenced by the setup script we will create in the next step.
+3. Add the large code block below to your `~/.bashrc` file.
+
+If you like a fancy prompt on your command line, I recommend `starship` which I also use. Trey does a good job of explaining it's configuration in the article referenced at the top.
+
+Here is the contents of `~/.config/direnv/direnvrc`:
+
+
     :::sh
     layout_python() {
         VIRTUAL_ENV="$(pwd)/.venv"
@@ -89,9 +95,6 @@ To get this workflow to operate, follow these steps:
         export VIRTUAL_ENV
     }
 
-3. Add the large code block below to your `~/.bashrc` file. 
-
-If you like a fancy prompt on your command line, I recommend `starship` which I also use. Trey does a good job of explaining it's configuration in the article referenced at the top.
 
 Here's the `.bashrc` code:
 
@@ -101,7 +104,7 @@ Here's the `.bashrc` code:
         local venv_name
         local projects_file="$HOME/.projects"
         local dir_name=$(basename "$PWD")
-    
+
         # If there are no arguments or the last argument starts with a dash, use dir_name
         if [ $# -eq 0 ] || [[ "${!#}" == -* ]]; then
             venv_name="$dir_name"
@@ -109,42 +112,42 @@ Here's the `.bashrc` code:
             venv_name="${!#}"
             set -- "${@:1:$#-1}"
         fi
-    
+
         # Check if .envrc already exists
         if [ -f .envrc ]; then
             echo "Error: .envrc already exists" >&2
             return 1
         fi
-    
+
         if grep -Fq "^${venv_name} " ${projects_file}; then
             echo "Error: a project named ${venv_name} already exists" >&2
             return 1
         fi
-    
+
         # Create venv
         if ! uv venv --quiet --seed --prompt "$venv_name" "$@" .venv; then
             echo "Error: Failed to create venv" >&2
             return 1
         fi
-    
+
         source .venv/bin/activate
-    
+
         # Create .envrc
         echo "layout python" > .envrc
-    
+
         # Append project name and directory to projects file
         echo "${venv_name} = ${PWD}" >> $projects_file
-    
+
         # Allow direnv to immediately activate the virtual environment
         direnv allow
-    
+
         if [ -f requirements.txt ]; then
             # Install requirements if requirements.txt exists
             uv pip install -r requirements.txt
         fi
-    
+
     }
-    
+
     workon() {
         local project_name="$1"
         local projects_file="$HOME/.projects"
@@ -154,32 +157,32 @@ Here's the `.bashrc` code:
             echo "Error: $projects_file not found" >&2
             return 1
         fi
-    
+
         # Get the project directory for the given project name
         project_dir=$(grep -E "^$project_name\s*=" "$projects_file" | sed 's/^[^=]*=\s*//')
-    
+
         # Ensure a project directory was found
         if [[ -z "$project_dir" ]]; then
             echo "Error: Project '$project_name' not found in $projects_file" >&2
             return 1
         fi
-    
+
         # Ensure the project directory exists
         if [[ ! -d "$project_dir" ]]; then
             echo "Error: Directory $project_dir does not exist" >&2
             return 1
         fi
-    
+
         # Change directories
         cd "$project_dir"
     }
-    
+
     rmvenv() {
         # Remove a virtual environment
         local venv_name
         local projects_file="$HOME/.projects"
         local dir_name=$(basename "$PWD")
-    
+
         # If there are no arguments or the last argument starts with a dash, use dir_name
         if [ $# -eq 0 ] || [[ "${!#}" == -* ]]; then
             venv_name="$dir_name"
@@ -188,35 +191,35 @@ Here's the `.bashrc` code:
             set -- "${@:1:$#-1}"
             workon $venv_name
         fi
-    
+
         # Check if .envrc already exists
         if [ -f .envrc ]; then
             echo "Removing .envrc"
             rm .envrc
         fi
-    
+
         if [ -d .venv ]; then
             echo "Removing .venv"
             rm -rf .venv
         fi
-    
+
         if [ -d .direnv ]; then
             echo "Removing .direnv"
             rm -rf .direnv
         fi
-    
+
         if grep -Fq ${venv_name} ${projects_file}; then
             echo "Removing ${venv_name} from ${projects_file}"
             sed -i "/^${venv_name}/d" ${projects_file}
         fi
     }
-    
+
     _workon_completions()
     {
       # This little bit of nasty pulls the first word from each line of .projects
       x=$(awk '{ print $1 }' .projects )
       local suggestions=($(compgen -W "$x" -- "${COMP_WORDS[1]}"))
-    
+
       if [ "${#suggestions[@]}" == "1" ]; then
         # if there's only one match, we remove the command literal
         # to proceed with the automatic completion of the number
@@ -229,9 +232,9 @@ Here's the `.bashrc` code:
       fi
       return 0
     }
-    
+
     # complete -o nospace -F _workon_completions workon
     complete -F _workon_completions workon
-    
+
     # cuts down on the direnv chatter when running `workon`
     export DIRENV_LOG_FORMAT=
