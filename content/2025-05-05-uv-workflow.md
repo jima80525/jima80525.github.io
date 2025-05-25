@@ -216,8 +216,9 @@ Here's the `.bashrc` code:
 
     _workon_completions()
     {
+      local projects_file="$HOME/.projects"
       # This little bit of nasty pulls the first word from each line of .projects
-      x=$(awk '{ print $1 }' .projects )
+      x=$(awk '{ print $1 }' $projects_file)
       local suggestions=($(compgen -W "$x" -- "${COMP_WORDS[1]}"))
 
       if [ "${#suggestions[@]}" == "1" ]; then
