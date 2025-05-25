@@ -389,8 +389,9 @@ rmvenv<span class="o">()</span><span class="w"> </span><span class="o">{</span>
 
 _workon_completions<span class="o">()</span>
 <span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">projects_file</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.projects&quot;</span>
 <span class="w">  </span><span class="c1"># This little bit of nasty pulls the first word from each line of .projects</span>
-<span class="w">  </span><span class="nv">x</span><span class="o">=</span><span class="k">$(</span>awk<span class="w"> </span><span class="s1">&#39;{ print $1 }&#39;</span><span class="w"> </span>.projects<span class="w"> </span><span class="k">)</span>
+<span class="w">  </span><span class="nv">x</span><span class="o">=</span><span class="k">$(</span>awk<span class="w"> </span><span class="s1">&#39;{ print $1 }&#39;</span><span class="w"> </span><span class="nv">$projects_file</span><span class="k">)</span>
 <span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">suggestions</span><span class="o">=(</span><span class="k">$(</span><span class="nb">compgen</span><span class="w"> </span>-W<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$x</span><span class="s2">&quot;</span><span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">COMP_WORDS</span><span class="p">[1]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="o">)</span>
 
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${#</span><span class="nv">suggestions</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
