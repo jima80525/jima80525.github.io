@@ -39,13 +39,11 @@ MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%b}/index.html'
 # JHA TODO REmove this flag for Dev only
 # LOAD_CONTENT_CACHE = False
 
-# Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
 THEME = 'pelican-twitchy'
-PYGMENTS_STYLE = "xcode"
-# BOOTSTRAP_THEME = 'darkly'
-BOOTSTRAP_THEME = 'cyborg'
+PYGMENTS_STYLE = "monokai"
+BOOTSTRAP_THEME = 'darkly'
 EXPAND_LATEST_ON_INDEX = True
 SHARE = True
 SOCIAL = (('Twitter', 'https://twitter.com/jimande75053775'), ('GitHub', 'https://github.com/jima80525'))
@@ -56,3 +54,5 @@ CC_LICENSE = 'CC-BY-SA'
 # BOOTSTRAP_THEME = 'cyborg'
 # BOOTSTRAP_THEME = 'litera'
 # BOOTSTRAP_THEME = 'slate'
+# need to change pygments style to match bootstrap style
+# PYGMENTS_STYLE = "xcode"  # doesn't work with darkly
